@@ -1,7 +1,7 @@
 doctype html
 html(lang='ko')
   head
-    title 설문조사 메인view
+    title signUpView
     meta(charset='UTF-8')
     link(rel='stylesheet', href='/bower_components/bootstrap/dist/css/bootstrap-theme.css')
     link(rel='stylesheet', href='/bower_components/bootstrap/dist/css/bootstrap.css')
@@ -22,7 +22,7 @@ html(lang='ko')
                 li 
                   a(href="#") Questionnaire
                 li 
-                  a(href="#") User
+                  a(href="/users") User
                 li 
                   a(href="#") Contact
               ul.nav.navbar-nav.sign
@@ -30,20 +30,28 @@ html(lang='ko')
                   a(href="/signInView") Sign in
                 li 
                   a(href="/signUpView") Sign up
-            div.main_write
-              h1 첫 번째 설문조사를 만들 준비가 되셨나요?
-            div.main_img
-              p.img_write    
-                |설문지를 사용하여 무료로 
-                br
-                |다양한 정보를 수집하고 정리해보세요.
-                br
-                a.btn.btn-primary(href="#") 설문지로 이동
-  footer
-        div.container
-          nav.nav-footer
-            p.credits © All Rights Reserved 2015
-            
+            form(action='/users', method='POST')
+              .form-group
+                label(for='name') Name
+                input.form-control(type='text', id='name', name='name', placeholder='Your name')
+              .form-group
+                label(for='email') Email address
+                input.form-control(type='email', id='email', name='email', placeholder='Email')
+              .form-group
+                label(for='password') Password
+                input.form-control(type='password', id='password', name='password', placeholder='Password')
+              .form-group
+                label(for='password_confirmation') Password 확인
+                input.form-control(type='password', id='password_confirmation', name='password_confirmation', placeholder='Password')
+              div.form-actions
+                a.btn.btn-default(href='javascript:window.history.back();') 뒤로 
+                | 
+                button.btn.btn-primary(type='submit') 회원가입 
+          
+    footer
+          div.container
+            nav.nav-footer
+              p.credits © All Rights Reserved 2015
 
         
   

@@ -8,7 +8,8 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
 
-var routes = require('./routes/index');
+var mainRoute = require('./routes/mainRoute');    //변수에 경로를 지정
+var usersRoute = require('./routes/usersRoute');
 var posts = require('./routes/posts');
 var mongoose   = require('mongoose');
 
@@ -37,7 +38,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/bower_components',  express.static(path.join(__dirname, '/bower_components')));
 app.use(methodOverride('_method', {methods: ['POST', 'GET']}));
 
-app.use('/', routes);
+app.use('/', mainRoute);    // 변수에 지정한 경로를 사용하겠다.
+app.use('/users', usersRoute);
 app.use('/posts', posts);
 
 // catch 404 and forward to error handler
