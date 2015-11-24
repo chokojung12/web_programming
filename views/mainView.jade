@@ -20,7 +20,7 @@ html(lang='ko')
             div.collapse.navbar-collapse
               ul.nav.navbar-nav
                 li 
-                  a(href="#") Questionnaire
+                  a(href="/questionaires") Questionnaire
                 li 
                   a(href="/users") User
                 li 
@@ -30,6 +30,19 @@ html(lang='ko')
                   a(href="/signInView") Sign in
                 li 
                   a(href="/signUpView") Sign up
+            .btn-group
+              button.btn.btn-default.dropdown-toggle(type='button', data-toggle='dropdown', aria-expanded='false')
+               | User 
+               span.caret
+              |   
+              ul.dropdown-menu(role='menu')
+               li
+                a(href='#') edit
+               |     
+               li
+                a(href='#') UserList
+               
+
             div.main_write
               h1 첫 번째 설문조사를 만들 준비가 되셨나요?
             div.main_img

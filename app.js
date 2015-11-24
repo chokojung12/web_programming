@@ -10,6 +10,7 @@ var methodOverride = require('method-override');
 
 var mainRoute = require('./routes/mainRoute');    //변수에 경로를 지정
 var usersRoute = require('./routes/usersRoute');
+var questionairesRoute = require('./routes/questionairesRoute');
 var posts = require('./routes/posts');
 var mongoose   = require('mongoose');
 
@@ -40,6 +41,7 @@ app.use(methodOverride('_method', {methods: ['POST', 'GET']}));
 
 app.use('/', mainRoute);    // 변수에 지정한 경로를 사용하겠다.
 app.use('/users', usersRoute);
+app.use('/questionnaires', questionairesRoute);
 app.use('/posts', posts);
 
 // catch 404 and forward to error handler
