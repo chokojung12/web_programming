@@ -26,7 +26,7 @@ app.locals.moment = require('moment');
 
 // mongodb connect
 // 아래 DB접속 주소는 꼭 자기 것으로 바꾸세요!
-mongoose.connect('mongodb://user:asdasd@ds041394.mongolab.com:41394/nodewp');
+mongoose.connect('mongodb://kook:pargon12@ds057944.mongolab.com:57944/questionaire');
 mongoose.connection.on('error', console.log);
 
 // uncomment after placing your favicon in /public

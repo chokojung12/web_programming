@@ -1,7 +1,7 @@
 doctype html
 html(lang='ko')
   head
-    title 설문조사 메인view
+    title 설문조사
     meta(charset='UTF-8')
     link(rel='stylesheet', href='/bower_components/bootstrap/dist/css/bootstrap-theme.css')
     link(rel='stylesheet', href='/bower_components/bootstrap/dist/css/bootstrap.css')
@@ -20,30 +20,19 @@ html(lang='ko')
             div.collapse.navbar-collapse
               ul.nav.navbar-nav
                 li 
-                  a(href="#") Questionnaire
+                  a(href="/questionaires") Questionnaire
                 li 
-                  a(href="#") User
+                  a(href="/users/edit") UserEdit
                 li 
-                  a(href="#") Contact
+                  a(href="/users/list") UserList
               ul.nav.navbar-nav.sign
                 li 
                   a(href="/signInView") Sign in
                 li 
                   a(href="/signUpView") Sign up
-            div.main_write
-              h1 첫 번째 설문조사를 만들 준비가 되셨나요?
-            div.main_img
-              p.img_write    
-                |설문지를 사용하여 무료로 
-                br
-                |다양한 정보를 수집하고 정리해보세요.
-                br
-                a.btn.btn-primary(href="#") 설문지로 이동
-  footer
-        div.container
-          nav.nav-footer
-            p.credits © All Rights Reserved 2015
-            
+          block content
+    block footer
+      include ./include/footer                
 
         
   
