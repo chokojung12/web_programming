@@ -2,7 +2,7 @@ extends ../layout
 block content
   h1 로그인
   div.form-div
-    form.form-signin(action='/signin', method='POST')
+    form.form-signin(action='/signInView', method='POST')
       label(for='email', class='sr-only') Email address
       input(
       type='email', id='email', name='email', class='form-control', 
@@ -15,9 +15,8 @@ block content
       )
       button.btn.btn-lg.btn-primary.btn-block(type='submit') 로그인
       hr
-      a.btn.btn-default.btn-mini(href='/users/new') 회원가입
-      | 
-      a.btn.btn-default.btn-mini(href='/reset-password') 비밀번호 재설정  
+      a.btn.btn-default.btn-mini(href='/signUpView') 회원가입
+     
 
 
         

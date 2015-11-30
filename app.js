@@ -7,11 +7,11 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
+var flash = require('connect-flash');
 
 var mainRoute = require('./routes/mainRoute');    //변수에 경로를 지정
 var usersRoute = require('./routes/usersRoute');
 var questionairesRoute = require('./routes/questionairesRoute');
-var posts = require('./routes/posts');
 var mongoose   = require('mongoose');
 
 var app = express();
@@ -42,8 +42,13 @@ app.use(methodOverride('_method', {methods: ['POST', 'GET']}));
 app.use('/', mainRoute);    // 변수에 지정한 경로를 사용하겠다.
 app.use('/users', usersRoute);
 app.use('/questionnaires', questionairesRoute);
-app.use('/posts', posts);
+app.use(flash());
 
+app.use(function(req, res, next) {
+  res.locals.currentUser = req.session.user;
+  res.locals.flashMessages = req.flash();
+  next();
+});
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
