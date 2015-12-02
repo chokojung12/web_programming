@@ -26,9 +26,9 @@
   "devDependencies": {
     "gulp": "^3.9.0",
     "gulp-env": "^0.2.0",
-    "gulp-jshint": "^1.11.2",
+    "gulp-jshint": "^1.12.0",
     "gulp-nodemon": "^2.0.4",
-    "gulp-sass": "^2.0.4",
+    "gulp-sass": "^2.1.0",
     "node-bourbon": "^4.2.3"
   }
 }
