@@ -22,14 +22,27 @@ html(lang='ko')
                 li 
                   a(href="/questionaires") Questionnaire
                 li 
+                  a(href="/questionaires") QuestionnaireList
+                li 
                   a(href="/users/edit") UserEdit
                 li 
                   a(href="/users/list") UserList
               ul.nav.navbar-nav.sign
-                li 
-                  a(href="/signInView") Sign in
-                li 
-                  a(href="/signUpView") Sign up
+                if (currentUser) 
+                  li
+                    a(href='/users/#{currentUser._id}') Profile
+                  li
+                    a(href='/signout') Signout
+                else
+                  li 
+                    a(href="/signInView") Sign in
+                  li 
+                    a(href="/signUpView") Sign up
+          if flashMessages
+            each texts, type in flashMessages
+              .alert(class='alert-#{type}')
+                each msg in texts
+                  p= msg    
           block content
     block footer
       include ./include/footer                

@@ -1,5 +1,5 @@
 {
-  "name": "guestbook",
+  "name": "Project",
   "version": "0.0.0",
   "private": true,
   "scripts": {
@@ -17,6 +17,10 @@
     "moment": "^2.10.6",
     "mongoose": "^4.2.2",
     "morgan": "~1.6.1",
+    "node-sass-middleware": "^0.9.7",
+    "passport": "^0.3.2",
+    "passport-facebook": "^2.0.0",
+    "passport-local": "^1.0.0",
     "serve-favicon": "~2.3.0"
   },
   "devDependencies": {
@@ -24,6 +28,7 @@
     "gulp-env": "^0.2.0",
     "gulp-jshint": "^1.11.2",
     "gulp-nodemon": "^2.0.4",
-    "gulp-sass": "^2.0.4"
+    "gulp-sass": "^2.0.4",
+    "node-bourbon": "^4.2.3"
   }
 }

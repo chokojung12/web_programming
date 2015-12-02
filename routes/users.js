@@ -7,7 +7,8 @@ router.get('/edit', function(req, res, next) {
   res.render('users/userEditView');
 });
 
-router.post('/', function(req, res, next) {
+
+router.post('/new', function(req, res, next) {
   var err = validateForm(req.body, {needPassword: true});
   if (err) {
     req.flash('danger', err);
@@ -19,19 +20,19 @@ router.post('/', function(req, res, next) {
     }
     if (user) {
       req.flash('danger', '동일한 이메일 주소가 이미 존재합니다.');
-      res.redirect('back');
+      return res.redirect('back');
     }
     var newUser = new User({
       name: req.body.name,
       email: req.body.email,
     });
-    newUser.password = req.body.password;
+    newUser.password = newUser.generateHash(req.body.password);
 
     newUser.save(function(err) {
       if (err) {
-        return next(err);
+        next(err);
       } else {
-        //req.flash('success', '가입이 완료되었습니다. 로그인 해주세요.');
+        req.flash('success', '가입이 완료되었습니다. 로그인 해주세요.');
         res.redirect('/');
       }
     });

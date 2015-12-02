@@ -119,3 +119,7 @@ form-signin{
   margin-top: 20px;
   margin-bottom: 30px;
 }
+
+.alert-#{type}{
+  width: 70%;
+}
