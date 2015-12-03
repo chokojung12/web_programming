@@ -20,10 +20,14 @@ function myfunction(){
 }
 
 function addQuestionFunction(){
+  /*var num = Math.random();
+  var string1 = '<div class="form-group"><label for="question">질문 제목</label><input type="text" id="question'+num+'"';
+  var string2 = 'name="question" placeholder="질문 제목" class="form-control"></div>'
+  var string3 = '<div class=.form-group.select><label for="questionType" id="questionTypeLabel'+num+'"';
+  var string4 = '>질문 유형 <select id="questionType'+num+'"';
+  var string5 = 'name="questionType" onchange="myfunction(this.value)" class="qusetionTypeSelect"><option value="select">선택</option><option value="short">단일 입력</option><option value="long">long text</option><option value="multiple">객관식 질문</option></select></label></div>';
+  $(".form-actions").before(string1 + string2);
+  $(".form-actions").before(string3 + string4 + string5);*/
   $(".form-actions").before('<div class="form-group"><label for="question">질문 제목</label><input type="text" id="question" name="question" placeholder="질문 제목" class="form-control"></div>');
   $(".form-actions").before('<div class=.form-group.select><label for="questionType" id="questionTypeLabel">질문 유형 <select id="questionType" name="questionType" onchange="myfunction(this.value)" class="qusetionTypeSelect"><option value="select">선택</option><option value="short">단일 입력</option><option value="long">long text</option><option value="multiple">객관식 질문</option></select></label></div>');
-}
-
-function addButton(){
-  alert("here");
 }

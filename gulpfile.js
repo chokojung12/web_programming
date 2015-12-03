@@ -31,7 +31,7 @@ gulp.task('nodemon', function (cb) {
   return nodemon({
     script: 'bin/www',
     ext: 'js jade html',
-    env: {DEBUG: "guestbook:server"}
+    env: {DEBUG: "questionnaire:server"}
   }).on('restart', function () {
     console.log('restarted!');
   });

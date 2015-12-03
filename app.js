@@ -14,7 +14,7 @@ var configAuth = require('./config/auth');
 
 var mainRoute = require('./routes/mainRoute');    //변수에 경로를 지정
 var users = require('./routes/users');
-var questionairesRoute = require('./routes/questionairesRoute');
+var questionnaireRoute = require('./routes/questionnaireRoute');
 var routeAuth = require('./routes/auth');
 
 /*
@@ -34,7 +34,7 @@ if (app.get('env') === 'development') {
 app.locals.moment = require('moment');
 
 // mongodb connect
-mongoose.connect('mongodb://kook:pargon12@ds057944.mongolab.com:57944/questionaire');
+mongoose.connect('mongodb://kook:pargon12@ds061954.mongolab.com:61954/questionnaire');
 mongoose.connection.on('error', console.log);
 
 // uncomment after placing your favicon in /public
@@ -69,7 +69,7 @@ configAuth(passport);
 
 app.use('/', mainRoute);    // 변수에 지정한 경로를 사용하겠다.
 app.use('/users', users);
-app.use('/questionnaires', questionairesRoute);
+app.use('/questionnaire', questionnaireRoute);
 routeAuth(app, passport);
 
 // catch 404 and forward to error handler

@@ -47,12 +47,22 @@ router.post('/new', function(req, res, next) {
 
 /* GET users listing. */
 router.get('/list', function(req, res, next) {
-  User.find({}, function(err, users) {
-    if (err) {
-      return next(err);
-    }
-    res.render('users/userListView', {users: users});
-  });
+  if(req.user === undefined){
+    req.flash('danger','운영자만 접근 가능합니다.');
+    res.redirect('/');
+  }
+  else if(req.user.name === 'admin'){
+    User.find({}, function(err, users) {
+      if (err) {
+        res.redirect('/');
+      }
+      res.render('users/userListView', {users: users});
+    });
+  }
+  else{
+    req.flash('danger','운영자만 접근 가능합니다.');
+    res.redirect('/');
+  }
 });
 
 router.put('/:id', function(req, res, next) {
@@ -93,15 +103,7 @@ router.put('/:id', function(req, res, next) {
 });
 
 
-//function part
-function needAuth(req, res, next) {
-    if (req.session.user) {
-      next();
-    } else {
-      req.flash('danger', '로그인이 필요합니다.');
-      res.redirect('/signInView');
-    }
-}
+
 
 function validateForm(form, options) {
   var name = form.name || "";

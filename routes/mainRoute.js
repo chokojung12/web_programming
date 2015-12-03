@@ -26,10 +26,10 @@ router.get('/signInView', function(req, res, next) {
 router.get('/signUpView', function(req, res, next) {
   res.render('users/signUpView');
 });
-
-router.get('/questionaires', function(req, res, next) {
-  res.render('questionaires/questionaireView');
-});
+/*
+router.get('/questionnaire', function(req, res, next) {
+  res.render('questionnaire/questionnaireView');
+});*/
 
 
 module.exports = router;
