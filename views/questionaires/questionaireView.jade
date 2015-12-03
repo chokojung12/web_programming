@@ -10,10 +10,10 @@ block content
       label(for='questionaireExplanation') 설문지 설명
       input.form-control(type='text', id='questionaireExplanation', name='questionaireExplanation', placeholder='설문지 설명')
     label(for='questionType') 질문 유형
-    select.qusetionTypeSelect(name='questionType')
-      option(value='') 객관식 질문
+    select.qusetionTypeSelect(id='questionType', name='questionType', onchange="myfunction(this.value)")
+      option(value='value1') 객관식 질문
       |   
-      option(value='saab') 주관식 질문
+      option(value='vlaue2') 주관식 질문
 
     div.form-actions
       a.btn.btn-default(href='javascript:window.history.back();') 뒤로 

@@ -1,3 +1,5 @@
+//app.METHOD(path, callback [, callback ...])
+
 module.exports = function(app, passport) {
   app.post('/signInView', passport.authenticate('local-signin', {
     successRedirect : '/', // redirect to the secure profile section

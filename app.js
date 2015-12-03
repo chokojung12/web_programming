@@ -1,3 +1,4 @@
+// like include
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
@@ -15,6 +16,12 @@ var mainRoute = require('./routes/mainRoute');    //변수에 경로를 지정
 var users = require('./routes/users');
 var questionairesRoute = require('./routes/questionairesRoute');
 var routeAuth = require('./routes/auth');
+
+/*
+Creates an Express application. The express() function is a top-level function exported by the express module.
+var express = require('express');
+var app = express();
+*/
 
 var app = express();
 
