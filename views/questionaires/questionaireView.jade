@@ -2,20 +2,26 @@ extends ../layout
 block content
   div
     h1 설문지 작성
-  form(action='/users', method='POST')
+  form(action='/users', id="questionaireForm", method='POST')
     .form-group
       label(for='questionaireName') 설문지 제목
       input.form-control(type='text', id='questionaireName', name='questionaireName', placeholder='설문지 제목')
     .form-group
       label(for='questionaireExplanation') 설문지 설명
       input.form-control(type='text', id='questionaireExplanation', name='questionaireExplanation', placeholder='설문지 설명')
-    label(for='questionType') 질문 유형
-    select.qusetionTypeSelect(id='questionType', name='questionType', onchange="myfunction(this.value)")
-      option(value='value1') 객관식 질문
-      |   
-      option(value='vlaue2') 주관식 질문
-
+    .form-group
+      label(for='question') 질문 제목
+      input.form-control(type='text', id='question', name='question', placeholder='질문 제목')
+    .form-group.select
+      label(for='questionType' id='questionTypeLabel') 질문 유형
+      select.qusetionTypeSelect(id='questionType', name='questionType', onchange="myfunction()")
+        option(value='select') 선택
+        option(value='short') 단일 입력
+        option(value='long') long text
+        option(value='multiple') 객관식 질문
+        
     div.form-actions
       a.btn.btn-default(href='javascript:window.history.back();') 뒤로 
       | 
+      button.btn.btn-primary(type='button' id="addQuestion" onclick="addQuestionFunction()") 질문 추가
       button.btn.btn-primary(type='submit') 완료
