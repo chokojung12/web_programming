@@ -1,7 +1,7 @@
 extends ../layout
 block content
   h1 회원 정보 수정
-  form(action='/users', method='POST')
+  form(action='/users/#{user._id}?_method=PUT', method='POST')
     .form-group
       label(for='name') Name
       input.form-control(type='text', id='name', name='name', placeholder='Your name')
@@ -10,13 +10,13 @@ block content
       input.form-control(type='email', id='email', name='email', placeholder='Email')
     .form-group
       label(for='password') 현재 Password
-      input.form-control(type='password', id='password', name='password', placeholder='Password')
+      input.form-control(type='text', id='password', name='password', placeholder='Password')
     .form-group
         label(for='password') 변경할 Password
-        input.form-control(type='password', id='password', name='password', placeholder='변경할 Password')
+        input.form-control(type='text', id='password', name='password', placeholder='변경할 Password')
     .form-group
       label(for='password_confirmation') Password 확인
-      input.form-control(type='password', id='password_confirmation', name='password_confirmation', placeholder='Password')
+      input.form-control(type='text', id='password_confirmation', name='password_confirmation', placeholder='Password')
     div.form-actions
       a.btn.btn-default(href='javascript:window.history.back();') 뒤로 
       | 

@@ -4,11 +4,87 @@ User = require('../models/User');
 var router = express.Router();
 
 //get url 접근 후 function 실행 약속, req, res, next => /edit의 결과 객체를 받고 항상 function 실행
-router.get('/edit', function(req, res, next) {
-  res.render('users/userEditView');
+
+/* GET users listing. */
+router.get('/list', function(req, res, next) {
+  if(req.user === undefined){
+    req.flash('danger','운영자만 접근 가능합니다.');
+    res.redirect('/');
+  }
+  else if(req.user.name === 'admin'){
+    User.find({}, function(err, users) {
+      if (err) {
+        res.redirect('/');
+      }
+      res.render('users/userListView', {users: users});
+    });
+  }
+  else{
+    req.flash('danger','운영자만 접근 가능합니다.');
+    res.redirect('/');
+  }
 });
 
+// user profile view
+router.get('/:id', function(req, res, next) {
+  User.findById(req.params.id, function(err, user) {
+    if (err) {
+      return next(err);
+    }
+    res.render('users/profileView', {user: user});
+  });
+});
 
+//user edit view
+router.get('/:id/edit', function(req, res, next) {
+  User.findById(req.params.id, function(err, user) {
+    if (err) {
+      return next(err);
+    }
+    res.render('users/userEditView', {user: user});
+  });
+});
+
+//edit user,
+router.put('/:id', function(req, res, next) {
+  var err = validateForm(req.body);
+  if (err) {
+    req.flash('danger', err);
+    return res.redirect('back');
+  }
+
+  User.findById({_id: req.params.id}, function(err, user) {
+    if (err) {
+      return next(err);
+    }
+    if (!user) {
+      req.flash('danger', '존재하지 않는 사용자입니다.');
+      return res.redirect('back');
+    }
+
+    if (user.password !== req.body.current_password) {
+      req.flash('danger',req.body.current_password);
+      //req.flash('danger', '현재 비밀번호가 일치하지 않습니다.');
+      return res.redirect('back');
+    }
+
+    user.name = req.body.name;
+    user.email = req.body.email;
+    if (req.body.password) {
+      user.password = user.generateHash(req.body.password);
+    }
+
+    user.save(function(err) {
+      if (err) {
+        return next(err);
+      }
+      req.flash('success', '사용자 정보가 변경되었습니다.');
+      res.redirect('/');
+    });
+  });
+});
+
+//user sign up
 router.post('/new', function(req, res, next) {
   // validateForm 함수 호출,값이 정상적으로 입력되면 validateForm에서 null return
   var err = validateForm(req.body, {needPassword: true});
@@ -45,60 +121,20 @@ router.post('/new', function(req, res, next) {
   });
 });
 
-/* GET users listing. */
-router.get('/list', function(req, res, next) {
-  if(req.user === undefined){
-    req.flash('danger','운영자만 접근 가능합니다.');
-    res.redirect('/');
-  }
-  else if(req.user.name === 'admin'){
-    User.find({}, function(err, users) {
-      if (err) {
-        res.redirect('/');
-      }
-      res.render('users/userListView', {users: users});
-    });
-  }
-  else{
-    req.flash('danger','운영자만 접근 가능합니다.');
-    res.redirect('/');
-  }
-});
-
-router.put('/:id', function(req, res, next) {
-  var err = validateForm(req.body);
-  if (err) {
-    req.flash('danger', err);
-    return res.redirect('back');
-  }
-
-  User.findById({_id: req.params.id}, function(err, user) {
+// delete user
+router.delete('/:id', function(req, res, next) {
+  User.findOneAndRemove({_id: req.params.id}, function(err) {
     if (err) {
       return next(err);
     }
-    if (!user) {
-      req.flash('danger', '존재하지 않는 사용자입니다.');
-      return res.redirect('back');
+    if(req.body.name === "admin"){
+      req.flash('success', '사용자 계정이 삭제되었습니다.');
+      res.redirect('/users/list');
     }
-
-    if (user.password !== req.body.current_password) {
-      req.flash('danger', '현재 비밀번호가 일치하지 않습니다.');
-      return res.redirect('back');
+    else{
+      req.flash('success', '사용자 계정이 삭제되었습니다.');
+      res.redirect('/');
     }
-
-    user.name = req.body.name;
-    user.email = req.body.email;
-    if (req.body.password) {
-      user.password = user.generateHash(req.body.password);
-    }
-
-    user.save(function(err) {
-      if (err) {
-        return next(err);
-      }
-      req.flash('success', '사용자 정보가 변경되었습니다.');
-      res.redirect('/users');
-    });
   });
 });
 
