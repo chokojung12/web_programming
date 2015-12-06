@@ -1,6 +1,7 @@
 // create express, like include <express>
 var express = require('express'),
-User = require('../models/User');
+User = require('../models/User'),
+bcrypt = require('bcryptjs');
 var router = express.Router();
 
 //get url 접근 후 function 실행 약속, req, res, next => /edit의 결과 객체를 받고 항상 function 실행
@@ -45,7 +46,7 @@ router.get('/:id/edit', function(req, res, next) {
   });
 });
 
-//edit user,
+//user edit
 router.put('/:id', function(req, res, next) {
   var err = validateForm(req.body);
   if (err) {
@@ -54,6 +55,7 @@ router.put('/:id', function(req, res, next) {
   }
 
   User.findById({_id: req.params.id}, function(err, user) {
+    var pwd = user.validatePassword(user.password);
     if (err) {
       return next(err);
     }
@@ -62,9 +64,9 @@ router.put('/:id', function(req, res, next) {
       return res.redirect('back');
     }
 
-    if (user.password !== req.body.current_password) {
-      req.flash('danger',req.body.current_password);
-      //req.flash('danger', '현재 비밀번호가 일치하지 않습니다.');
+    // DB에서 암호화된 암호를 복호화 시켜야하는데 안되는 문제점 해결
+    if(!(bcrypt.compareSync(req.body.current_password, user.password))) {
+      req.flash('danger', '현재 비밀번호가 일치하지 않습니다.');
       return res.redirect('back');
     }
 
@@ -137,8 +139,6 @@ router.delete('/:id', function(req, res, next) {
     }
   });
 });
-
-
 
 
 function validateForm(form, options) {
