@@ -1,8 +1,12 @@
 extends ../layout
 block content
   div
+  if questionnaire.id
+    h1 설문 수정
+  else
     h1 설문지 작성
-  form(action='/users', id="questionaireForm", method='POST')
+    
+  form(action = (questionnaire.id) ? "/questionnaire/#{questionnaire.id}?_method=PUT" : "/questionnaire", method='POST')
     .form-group
       label(for='questionanireName') 설문지 제목
       input.form-control(type='text', id='questionnaireName', name='questionnaireName', placeholder='설문지 제목')
