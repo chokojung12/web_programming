@@ -8,21 +8,17 @@ router.get('/new',needAuth ,function(req, res, next) {
     if (err) {
       return next(err);
     }
-
     res.render('questionnaire/questionnaireEdit',{questionnaire: {}});
   });
 });
 
-router.post('/:id', function(req, res, next) {
+router.post('/', function(req, res, next) {
   // validateForm 함수 호출,값이 정상적으로 입력되면 validateForm에서 null return
   var err = validateForm(req.body);
   if (err) {
     req.flash('danger', err);
     return res.redirect('back');
   }
-
-  req.flash('success', "작성 완료");
-  res.redirect('/');
 
   var questionnaire = new Questionnaire({
     email: req.user.name,
@@ -35,18 +31,14 @@ router.post('/:id', function(req, res, next) {
       if (err) {
         return next(err);
       }
-      req.flash('success', "작성 완료");
+      //doc.id가 url
       res.redirect('/questionnaire/' + doc.id);
     });
 });
 
 
-
-//
 //설문 작성완료
 router.get('/:id', function(req, res, next) {
-  req.flash('success', "작성 완료");
-  res.redirect('/');
   Questionnaire.findById(req.params.id, function(err, questionnaire) {
     if (err) {
       return next(err);

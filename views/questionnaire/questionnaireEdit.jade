@@ -6,6 +6,7 @@ block content
   else
     h1 설문지 작성
     
+    //"/questionnaire", method='POST',  "/questionnaire/#{questionnaire.id}?_method=PUT"
   form(action = (questionnaire.id) ? "/questionnaire/#{questionnaire.id}?_method=PUT" : "/questionnaire", method='POST')
     .form-group
       label(for='questionanireName') 설문지 제목

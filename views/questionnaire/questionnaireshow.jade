@@ -1,12 +1,18 @@
 extends ../layout
 block content
   div
-    h1 설문지
+    h1 #{questionnaire.questionnaireName}
     p
       b by #{questionnaire.email}
       | 
       span at #{moment(questionnaire.createdAt).format('YYYY-MM-DD HH:mm:ss')} 
       | 
-    p.well(style='white-space:pre;')= questionnaire.contents
-    
-    a.btn.btn-default(href='#') 목록
+    b 설문지 설명
+    p.well(style='white-space:pre;')= questionnaire.questionnaireExplanation
+    b 질문
+    p.well(style='white-space:pre;')= questionnaire.question
+    b 질문 형식
+    p.well(style='white-space:pre;')= questionnaire.questionType
+    b URL
+    p.well(style='white-space:pre;')= questionnaire._id
+    a.btn.btn-default(href='/') 홈으로
