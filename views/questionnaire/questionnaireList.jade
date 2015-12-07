@@ -1,0 +1,27 @@
+extends ../layout
+block content
+  h1 설문 리스트  
+  
+  table.table.table-striped.table-bordered
+    thead
+      tr
+        th 작성자
+        th 설문 제목
+        th 설문지url
+        th 설문 결과
+        th 작성 일시
+        th
+    tbody
+      each questionnaire in questionnaires
+        tr
+          td= questionnaire.email
+          td= questionnaire.questionnaireName
+          td
+            a(href='/questionnaire/#{questionnaire._id}') 설문지 보기
+          td
+            a(href='/questionnaire/#{questionnaire._id}/result') 설문 결과 보기
+          td= moment(questionnaire.createdAt).format('YYYY-MM-DD HH:mm:ss')
+          td
+            a.btn.btn-xs.btn-default(href='/questionnaire/#{questionnaire._id}/edit') 수정
+            | 
+            a.btn.btn-xs.btn-default(href='/questionnaire/#{questionnaire._id}?_method=DELETE') 삭제

@@ -1,6 +1,7 @@
 var express = require('express'),
 User = require('../models/User'),
-Questionnaire = require('../models/Questionnaire');
+Questionnaire = require('../models/Questionnaire'),
+QuestionnaireAnswer = require('../models/QuestionnaireAnswer');
 var router = express.Router();
 
 //설문지 작성 페이지
@@ -11,6 +12,28 @@ router.get('/new',needAuth ,function(req, res, next) {
     }
     res.render('questionnaire/questionnaireEdit',{questionnaire: {}});
   });
+});
+
+//questionnaireList
+router.get('/list',needAuth ,function(req, res, next) {
+  var email = req.user.name;
+  Questionnaire.find({'email': email}, function(err, questionnaires) {
+    if (err) {
+      return next(err);
+    }
+    res.render('questionnaire/questionnaireList', {questionnaires: questionnaires});
+  });
+});
+
+router.get('/:id/result',needAuth ,function(req, res, next) {
+  res.render('questionnaire/QuestionnaireResult');
+  /*var email = req.user.name;
+  Questionnaire.find({'email': email}, function(err, questionnaires) {
+    if (err) {
+      return next(err);
+    }
+    res.render('questionnaire/questionnaireList', {questionnaires: questionnaires});
+  });*/
 });
 
 //설문지 작성
@@ -52,10 +75,26 @@ router.get('/:id', function(req, res, next) {
 });
 
 //설문작성
-router.post('/result', function(req, res, next) {
+router.post('/:id', function(req, res, next) {
   // validateForm 함수 호출,값이 정상적으로 입력되면 validateForm에서 null return
-  req.flash('success','설문 작성완료');
-  res.redirect('/');
+
+  var err = validateAnswerForm(req.body);
+  if (err) {
+    req.flash('danger', err);
+    return res.redirect('back');
+  }
+
+  var questionnaireAnswer = new QuestionnaireAnswer({
+    answer: req.body.answer,
+    url: req.url
+  });
+  questionnaireAnswer.save(function(err) {
+      if (err) {
+        return next(err);
+      }
+      req.flash('success','설문 작성완료');
+      res.redirect('/');
+  });
 });
 
 /*
@@ -121,6 +160,15 @@ function validateForm(form) {
     return '질문 유형을 선택해주세요.';
   }
 
+  return null;
+}
+
+function validateAnswerForm(form) {
+  var answer = form.answer || "";
+
+  if (!answer) {
+    return '답변을 입력해주세요.';
+  }
   return null;
 }
 
