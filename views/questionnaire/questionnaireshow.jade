@@ -1,6 +1,7 @@
 extends ../layout
 block content
   div
+    h1 설문 작성
     h1 #{questionnaire.questionnaireName}
     p
       b by #{questionnaire.email}
@@ -11,8 +12,38 @@ block content
     p.well(style='white-space:pre;')= questionnaire.questionnaireExplanation
     b 질문
     p.well(style='white-space:pre;')= questionnaire.question
-    b 질문 형식
-    p.well(style='white-space:pre;')= questionnaire.questionType
-    b URL
-    p.well(style='white-space:pre;')= questionnaire._id
-    a.btn.btn-default(href='/') 홈으로
+    
+    if questionnaire.questionType == 'short'
+      .form-group
+         form(action='/questionnaire/result', method='POST')
+          div
+            label(for='question') 답변
+            input.form-control(type='text', name='answer', placeholder='답변')
+            input.form-control(type='hidden', name='url')
+          div.form-actions
+            a.btn.btn-default(href='/') 홈으로 
+            | 
+            button.btn.btn-primary(type='submit') 제출 
+    else if questionnaire.questionType == 'long'
+      .form-group
+         form(action='/questionnaire/result', method='POST')
+          div
+            label(for='question') 답변
+            textarea(rows='10', cols='80')
+            input.form-control(type='hidden', name='url')
+          div.form-actions
+            a.btn.btn-default(href='/') 홈으로 
+            | 
+            button.btn.btn-primary(type='submit') 제출 
+    else
+      .form-group
+         form(action='/questionnaire/result', method='POST')
+          div
+            label(for='question') 답변
+            input.form-control(type='text', name='answer', placeholder='답변')
+            input.form-control(type='hidden', name='url')
+          div.form-actions
+            a.btn.btn-default(href='/') 홈으로 
+            | 
+            button.btn.btn-primary(type='submit') 제출     
+    

@@ -3,6 +3,7 @@ User = require('../models/User'),
 Questionnaire = require('../models/Questionnaire');
 var router = express.Router();
 
+//설문지 작성 페이지
 router.get('/new',needAuth ,function(req, res, next) {
   User.findById(req.params.id, function(err, user) {
     if (err) {
@@ -12,6 +13,7 @@ router.get('/new',needAuth ,function(req, res, next) {
   });
 });
 
+//설문지 작성
 router.post('/', function(req, res, next) {
   // validateForm 함수 호출,값이 정상적으로 입력되면 validateForm에서 null return
   var err = validateForm(req.body);
@@ -37,29 +39,33 @@ router.post('/', function(req, res, next) {
 });
 
 
-//설문 작성완료
+//설문지 작성완료
 router.get('/:id', function(req, res, next) {
   Questionnaire.findById(req.params.id, function(err, questionnaire) {
     if (err) {
       return next(err);
     }
-    if (questionnaire) {
-      res.render('questionnaire/questionnaireshow', {questionnaire: questionnaire});
-    }
+    res.render('questionnaire/questionnaireshow', {questionnaire: questionnaire});
+
     return next(new Error('not found'));
   });
 });
 
+//설문작성
+router.post('/result', function(req, res, next) {
+  // validateForm 함수 호출,값이 정상적으로 입력되면 validateForm에서 null return
+  req.flash('success','설문 작성완료');
+  res.redirect('/');
+});
 
+/*
 //
 router.put('/:id', function(req, res, next) {
-  req.flash('success', "작성 완료");
-  res.redirect('/');
   Questionnaire.findById(req.params.id, function(err, questionnaire) {
     if (err) {
       return next(err);
     }
-    /*
+
     if (req.body.password === post.password) {
       post.email = req.body.email;
       post.title = req.body.title;
@@ -67,22 +73,20 @@ router.put('/:id', function(req, res, next) {
       post.save(function(err) {
         res.redirect('/posts/' + req.params.id);
       });
-    }*/
+    }
     res.redirect('/');
   });
 });
 
 //
 router.get('/:id/edit', function(req, res, next) {
-  req.flash('success', "작성 완료");
-  res.redirect('/');
   Questionnaire.findById(req.params.id, function(err, questionnaire) {
     if (err) {
       return next(err);
     }
     res.render('questionnaire/questionnaireEdit', {questionnaire: questionnaire});
   });
-});
+});*/
 
 
 
