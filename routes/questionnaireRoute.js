@@ -26,14 +26,16 @@ router.get('/list',needAuth ,function(req, res, next) {
 });
 
 router.get('/:id/result',needAuth ,function(req, res, next) {
-  res.render('questionnaire/QuestionnaireResult');
-  /*var email = req.user.name;
-  Questionnaire.find({'email': email}, function(err, questionnaires) {
+  var email = req.user.name;
+  var url = req.url.split('/');
+  var url2 = url[1].split('/');
+
+  QuestionnaireAnswer.find({'url':url2}, function(err, questionnaireAnswers) {
     if (err) {
       return next(err);
     }
-    res.render('questionnaire/questionnaireList', {questionnaires: questionnaires});
-  });*/
+    res.render('questionnaire/QuestionnaireResult', {questionnaireAnswers: questionnaireAnswers});
+  });
 });
 
 //설문지 작성
@@ -57,12 +59,13 @@ router.post('/', function(req, res, next) {
         return next(err);
       }
       //doc.id가 url
-      res.redirect('/questionnaire/' + doc.id);
+      req.flash('success','설문지 작성 완료');
+      res.redirect('/');
     });
 });
 
 
-//설문지 작성완료
+//설문지 show
 router.get('/:id', function(req, res, next) {
   Questionnaire.findById(req.params.id, function(err, questionnaire) {
     if (err) {
@@ -84,9 +87,10 @@ router.post('/:id', function(req, res, next) {
     return res.redirect('back');
   }
 
+  var url = req.url.split('/');
   var questionnaireAnswer = new QuestionnaireAnswer({
     answer: req.body.answer,
-    url: req.url
+    url: url[1]
   });
   questionnaireAnswer.save(function(err) {
       if (err) {
@@ -97,27 +101,6 @@ router.post('/:id', function(req, res, next) {
   });
 });
 
-/*
-//
-router.put('/:id', function(req, res, next) {
-  Questionnaire.findById(req.params.id, function(err, questionnaire) {
-    if (err) {
-      return next(err);
-    }
-
-    if (req.body.password === post.password) {
-      post.email = req.body.email;
-      post.title = req.body.title;
-      post.content = req.body.content;
-      post.save(function(err) {
-        res.redirect('/posts/' + req.params.id);
-      });
-    }
-    res.redirect('/');
-  });
-});
-
-//
 router.get('/:id/edit', function(req, res, next) {
   Questionnaire.findById(req.params.id, function(err, questionnaire) {
     if (err) {
@@ -125,8 +108,47 @@ router.get('/:id/edit', function(req, res, next) {
     }
     res.render('questionnaire/questionnaireEdit', {questionnaire: questionnaire});
   });
-});*/
+});
 
+router.put('/:id', function(req, res, next) {
+  var err = validateForm(req.body);
+  if (err) {
+    req.flash('danger', err);
+    return res.redirect('back');
+  }
+  Questionnaire.findById(req.params.id, function(err, questionnaire) {
+    if (err) {
+      return next(err);
+    }
+    else {
+      questionnaire.questionnaireName = req.body.questionnaireName;
+      questionnaire.questionnaireExplanation = req.body.questionnaireExplanation;
+      questionnaire.question = req.body.question;
+      questionnaire.questionType =  req.body.questionType;
+      questionnaire.save(function(err) {
+        if (err) {
+          return next(err);
+        }
+        req.flash('success', '설문지 수정 완료');
+        res.redirect('/');
+      });
+    }
+  });
+});
+
+
+// delete questionnaire
+router.delete('/:id', function(req, res, next) {
+  Questionnaire.findOneAndRemove({'_id': req.params.id}, function(err) {
+    if (err) {
+      return next(err);
+    }
+    else{
+      req.flash('success', '설문이 삭제되었습니다.');
+      res.redirect('/');
+    }
+  });
+});
 
 
 function needAuth(req, res, next) {

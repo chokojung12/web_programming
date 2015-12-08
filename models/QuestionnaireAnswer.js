@@ -6,8 +6,6 @@ var schema = new Schema({
   answer: {type: String, required: true },
   //url
   url: {type: String, required: true },
-  //응답자 수
-  count: {type: String, required: true },
   // 시간
   createdAt: {type: Date, default: Date.now}
 }, {

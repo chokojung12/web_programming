@@ -17,7 +17,7 @@ block content
           td= questionnaire.email
           td= questionnaire.questionnaireName
           td
-            a(href='/questionnaire/#{questionnaire._id}') 설문지 보기
+            a(href='/questionnaire/#{questionnaire._id}') /questionnaire/#{questionnaire._id}
           td
             a(href='/questionnaire/#{questionnaire._id}/result') 설문 결과 보기
           td= moment(questionnaire.createdAt).format('YYYY-MM-DD HH:mm:ss')

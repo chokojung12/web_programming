@@ -1,3 +1,9 @@
 extends ../layout
-block content
-  h1 설문 결과 
+block content 
+    div
+      h1 설문 결과
+    
+      each questionnaireAnswer in questionnaireAnswers
+        p
+          span at #{moment(questionnaireAnswer.createdAt).format('YYYY-MM-DD HH:mm:ss')} 
+        p.well(style='white-space:pre;')= questionnaireAnswer.answer
