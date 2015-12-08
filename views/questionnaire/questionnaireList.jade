@@ -17,7 +17,8 @@ block content
           td= questionnaire.email
           td= questionnaire.questionnaireName
           td
-            a(href='/questionnaire/#{questionnaire._id}') /questionnaire/#{questionnaire._id}
+            a(href='/questionnaire/#{questionnaire._id}')
+              p https://still-sea-1780.herokuapp.com/questionnaire/#{questionnaire._id}
           td
             a(href='/questionnaire/#{questionnaire._id}/result') 설문 결과 보기
           td= moment(questionnaire.createdAt).format('YYYY-MM-DD HH:mm:ss')

@@ -24,17 +24,17 @@ block content
           | 
           button.btn.btn-primary(type='submit') 제출 
     else if questionnaire.questionType == 'long'
-      form(action='/questionnaire/answer', method='POST')
+      form(action='/questionnaire/#{questionnaire._id}', method='POST')
        div.form-group
          label(for='question') 답변
-         textarea(rows='10', cols='80')
+         textarea(rows='10', cols='80' name='answer', placeholder='답변')
          input.form-control(type='hidden', name='url')
        div.form-actions
          a.btn.btn-default(href='/') 홈으로 
          | 
          button.btn.btn-primary(type='submit') 제출 
     else
-      form(action='/questionnaire/answer', method='POST')
+      form(action='/questionnaire/#{questionnaire._id}', method='POST')
         div.form-actions
           label(for='question') 답변
           input.form-control(type='text', name='answer', placeholder='답변')

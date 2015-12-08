@@ -140,6 +140,11 @@ router.put('/:id', function(req, res, next) {
 // delete questionnaire
 router.delete('/:id', function(req, res, next) {
   Questionnaire.findOneAndRemove({'_id': req.params.id}, function(err) {
+    QuestionnaireAnswer.remove({'url': req.params.id}, function(err){
+      if(err){
+        return next(err);
+      }
+    });
     if (err) {
       return next(err);
     }
