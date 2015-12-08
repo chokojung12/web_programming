@@ -17,9 +17,9 @@ block content
     .form-group
       label(for='question') 질문 제목
       input.form-control(type='text', id='question', name='question', placeholder='질문 제목')
-    .form-group.select
+    .form-group.select(id="question1")
       label(for='questionType' id='questionTypeLabel') 질문 유형
-      select.qusetionTypeSelect(id='questionType', class = "questionTypeClass",name='questionType', onchange="myfunction()")
+      select.qusetionTypeSelect(id='questionType', class = "questionType",name='questionType')
         option(value='select') 선택
         option(value='short') 단일 입력
         option(value='long') long text
@@ -28,5 +28,5 @@ block content
     div.form-actions
       a.btn.btn-default(href='javascript:window.history.back();') 뒤로 
       | 
-      button.btn.btn-primary(type='button' id="addQuestion" onclick="addQuestionFunction()") 질문 추가
+      button.btn.btn-primary(type='button' id="addQuestion") 질문 추가
       button.btn.btn-primary(type='submit') 완료

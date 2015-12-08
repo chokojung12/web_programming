@@ -30,11 +30,15 @@ router.get('/:id/result',needAuth ,function(req, res, next) {
   var url = req.url.split('/');
   var url2 = url[1].split('/');
 
-  QuestionnaireAnswer.find({'url':url2}, function(err, questionnaireAnswers) {
-    if (err) {
-      return next(err);
-    }
-    res.render('questionnaire/QuestionnaireResult', {questionnaireAnswers: questionnaireAnswers});
+  Questionnaire.findById(url2, function(err, questionnaire){
+    QuestionnaireAnswer.count(url2,function(err, count){
+      QuestionnaireAnswer.find({'url':url2}, function(err, questionnaireAnswers) {
+        if (err) {
+          return next(err);
+        }
+        res.render('questionnaire/QuestionnaireResult', {questionnaireAnswers: questionnaireAnswers, count:count, questionnaire:questionnaire});
+      });
+    });
   });
 });
 
