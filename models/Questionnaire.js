@@ -12,6 +12,8 @@ var schema = new Schema({
   question : {type: String, required: true, trim: true},
   // 질문 타입
   questionType : {type: String, required: true, trim: true},
+  multiple : [String],
+  andSoOn : {type: Boolean},
   // 시간
   createdAt: {type: Date, default: Date.now}
 }, {

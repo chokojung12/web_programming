@@ -31,7 +31,7 @@ router.get('/:id/result',needAuth ,function(req, res, next) {
   var url2 = url[1].split('/');
 
   Questionnaire.findById(url2, function(err, questionnaire){
-    QuestionnaireAnswer.count(url2,function(err, count){
+    QuestionnaireAnswer.count({'url':url2},function(err, count){
       QuestionnaireAnswer.find({'url':url2}, function(err, questionnaireAnswers) {
         if (err) {
           return next(err);
@@ -50,13 +50,16 @@ router.post('/', function(req, res, next) {
     req.flash('danger', err);
     return res.redirect('back');
   }
+  console.log(req.body.andSoOn);
 
   var questionnaire = new Questionnaire({
     email: req.user.name,
     questionnaireName: req.body.questionnaireName,
     questionnaireExplanation: req.body.questionnaireExplanation,
     question: req.body.question,
-    questionType: req.body.questionType
+    questionType: req.body.questionType,
+    multiple: req.body.option,
+    andSoOn: req.body.andSoOn
   });
   questionnaire.save(function(err, doc) {
       if (err) {
@@ -76,7 +79,6 @@ router.get('/:id', function(req, res, next) {
       return next(err);
     }
     res.render('questionnaire/questionnaireshow', {questionnaire: questionnaire});
-
     return next(new Error('not found'));
   });
 });

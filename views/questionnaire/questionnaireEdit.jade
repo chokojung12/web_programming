@@ -14,16 +14,16 @@ block content
     .form-group
       label(for='questionnaireExplanation') 설문지 설명
       input.form-control(type='text', id='questionnaireExplanation', name='questionnaireExplanation', placeholder='설문지 설명')
-    .form-group
+    .form-group.quesionName(id='quesionName')
       label(for='question') 질문 제목
       input.form-control(type='text', id='question', name='question', placeholder='질문 제목')
-    .form-group.select(id="question1")
+    .form-group.select.questionSelect(id="questionSelect")
       label(for='questionType' id='questionTypeLabel') 질문 유형
-      select.qusetionTypeSelect(id='questionType', class = "questionType",name='questionType')
-        option(value='select') 선택
-        option(value='short') 단일 입력
-        option(value='long') long text
-        option(value='multiple') 객관식 질문
+      select(id='questionType',name='questionType' class='questionTypeSelect')
+        option(value='select',id='option1') 선택
+        option(value='short',id='option2') 단일 입력
+        option(value='long',id='option3') long text
+        option(value='multiple', id='option4') 객관식 질문
         
     div.form-actions
       a.btn.btn-default(href='javascript:window.history.back();') 뒤로 

@@ -123,3 +123,7 @@ form-signin{
 .alert-#{type}{
   width: 70%;
 }
+
+#inputOption{
+  width: 50%;
+}

@@ -1,19 +1,43 @@
 extends ../layout
 block content 
-    div
-      h1 설문 결과
-      h1 설문지 제목:#{questionnaire.questionnaireName}
-      p
-        b by #{questionnaire.email}
-        | 
-        span at #{moment(questionnaire.createdAt).format('YYYY-MM-DD HH:mm:ss')} 
-        | 
-      b 설문지 설명
-      p.well(style='white-space:pre;')= questionnaire.questionnaireExplanation
-      b 질문
-      p.well(style='white-space:pre;')= questionnaire.question
-      b 응답자수: #{count}
-      each questionnaireAnswer in questionnaireAnswers
+    if questionnaire.questionType !== 'multiple'
+      div
+        h1 설문 결과
+        h2 응답자 수: #{count}
+        h3 설문지 제목:#{questionnaire.questionnaireName}
         p
-          span at #{moment(questionnaireAnswer.createdAt).format('YYYY-MM-DD HH:mm:ss')} 
-        p.well(style='white-space:pre;')= questionnaireAnswer.answer
+          b by #{questionnaire.email}
+          | 
+          span at #{moment(questionnaire.createdAt).format('YYYY-MM-DD HH:mm:ss')} 
+          | 
+        b 설문지 설명
+        p.well(style='white-space:pre;')= questionnaire.questionnaireExplanation
+        b 질문
+        p.well(style='white-space:pre;')= questionnaire.question
+        each questionnaireAnswer in questionnaireAnswers
+          p
+            span at #{moment(questionnaireAnswer.createdAt).format('YYYY-MM-DD HH:mm:ss')} 
+          p.well(style='white-space:pre;')= questionnaireAnswer.answer
+    else
+      div
+        h1 설문 결과
+        h2 응답자 수: #{count}
+        h3 설문지 제목:#{questionnaire.questionnaireName}
+        p
+          b by #{questionnaire.email}
+          | 
+          span at #{moment(questionnaire.createdAt).format('YYYY-MM-DD HH:mm:ss')} 
+          | 
+        b 설문지 설명
+        p.well(style='white-space:pre;')= questionnaire.questionnaireExplanation
+        b 질문
+        p.well(style='white-space:pre;')= questionnaire.question
+        each arr in questionnaire.multiple
+          input.radio1(type='radio', name='answer' value='#{arr}')
+          b  #{arr}
+          br
+
+        each questionnaireAnswer in questionnaireAnswers
+          p
+            span at #{moment(questionnaireAnswer.createdAt).format('YYYY-MM-DD HH:mm:ss')} 
+          p.well(style='white-space:pre;')= questionnaireAnswer.answer
