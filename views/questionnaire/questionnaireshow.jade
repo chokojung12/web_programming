@@ -38,8 +38,8 @@ block content
             input.radio1(type='radio', name='answer' value='#{arr}')
             b  #{arr}
             br
-            if questionnaire.andSoOn===false
-              input(type='text', name='answer', id='inputOption' placeholder='기타 답변')
+          if questionnaire.andSoOn===false
+            input(type='text', name='answer', id='inputOption' placeholder='기타 답변')
             
         div.form-actions
           a.btn.btn-default(href='/') 홈으로 

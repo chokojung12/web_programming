@@ -7,20 +7,6 @@ module.exports = function(app, passport) {
     failureFlash : true // allow flash messages
   }));
 
-  app.get('/auth/facebook',
-    passport.authenticate('facebook', { scope : 'email' })
-  );
-
-  app.get('/auth/facebook/callback',
-    passport.authenticate('facebook', {
-      failureRedirect : '/signInView',
-      failureFlash : true // allow flash messages
-    }),
-    function(req, res, next) {
-      req.flash('success', '로그인되었습니다.');
-      res.redirect('/');
-    }
-  );
 
   app.get('/signOut', function(req, res) {
     req.logout();
