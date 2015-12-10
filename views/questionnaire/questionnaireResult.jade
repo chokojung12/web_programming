@@ -15,6 +15,7 @@ block content
         b 질문
         p.well(style='white-space:pre;')= questionnaire.question
         each questionnaireAnswer in questionnaireAnswers
+          b 답변
           p
             span at #{moment(questionnaireAnswer.createdAt).format('YYYY-MM-DD HH:mm:ss')} 
           p.well(style='white-space:pre;')= questionnaireAnswer.answer
@@ -38,6 +39,7 @@ block content
           br
 
         each questionnaireAnswer in questionnaireAnswers
+          b 답변
           p
             span at #{moment(questionnaireAnswer.createdAt).format('YYYY-MM-DD HH:mm:ss')} 
           p.well(style='white-space:pre;')= questionnaireAnswer.answer
