@@ -36,7 +36,7 @@ router.get('/:id/result',needAuth ,function(req, res, next) {
         if (err) {
           return next(err);
         }
-        res.render('questionnaire/QuestionnaireResult', {questionnaireAnswers: questionnaireAnswers, count:count, questionnaire:questionnaire});
+        res.render('questionnaire/questionnaireResult', {questionnaireAnswers: questionnaireAnswers, count:count, questionnaire:questionnaire});
       });
     });
   });
